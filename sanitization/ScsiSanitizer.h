@@ -6,9 +6,12 @@
 namespace core::sanitization {
 
 /// SCSI Sanitize command (SCSI Block Commands — SBC-4).
-/// Also issues SCSI FORMAT UNIT as a fallback when the SANITIZE command is absent.
 ///
-/// Achieves: NIST SP 800-88 PURGE (SANITIZE) or CLEAR (FORMAT UNIT)
+/// SANITIZE is used for device-level sanitization when supported.
+/// FORMAT UNIT is retained only as a separate CLEAR-class fallback
+/// and must not be treated as equivalent to SANITIZE/PURGE.
+///
+/// The result reports the actual method and assurance level used.
 class ScsiSanitizer {
 public:
     ScsiSanitizer()  = default;
