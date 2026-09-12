@@ -1,4 +1,4 @@
-# SIH ForensicOS
+# ForensicOS
 ### Forensic Data Recovery, Evidence Acquisition & Secure Storage Sanitization
 
 > A modular Linux-based storage forensics and sanitization platform for device discovery, forensic acquisition, deleted-file recovery, secure sanitization, and post-operation verification.
