@@ -1,504 +1,234 @@
-# SIH SanitizerOS
-### Forensic Data Recovery, Evidence Acquisition & Secure Storage Sanitization
+# ReSecureOS
 
-> A modular Linux-based storage forensics and sanitization platform for device discovery, forensic acquisition, deleted-file recovery, secure sanitization, and post-operation verification.
+### Open-Source Linux Platform for Digital Forensics, Data Recovery & Secure Storage Sanitization
 
-[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
-[![Linux](https://img.shields.io/badge/Platform-Linux-orange.svg)](https://www.linux.org/)
-[![CMake](https://img.shields.io/badge/Build-CMake-064F8C.svg)](https://cmake.org/)
-[![OpenSSL](https://img.shields.io/badge/Crypto-OpenSSL-721412.svg)](https://www.openssl.org/)
-[![Status](https://img.shields.io/badge/Status-Active%20Development-yellow.svg)](#development-status)
-[![License](https://img.shields.io/badge/License-See%20LICENSE-lightgrey.svg)](#license)
+<p align="center">
+  <strong>Recover. Acquire. Verify. Resecure.</strong>
+</p>
 
----
+<p align="center">
+  A modular Linux-based platform for forensic acquisition, deleted-file recovery, storage analysis, and secure device sanitization.
+</p>
 
-## Overview
-
-**SIH SanitizerOS** is a modular storage-forensics and secure-sanitization platform designed for controlled handling of storage devices.
-
-The system combines:
-
-- Device discovery and identification
-- Storage metadata inspection
-- Forensic disk acquisition
-- SHA-256 evidence hashing
-- Deleted-file carving
-- File validation and confidence scoring
-- Recovered-file classification
-- Capability-driven storage sanitization
-- Post-operation verification
-- Evidence manifests and audit information
-- Linux-based graphical and command-line workflows
-
-The project is designed around a **modular C++ core** with a lightweight user interface layer, allowing individual storage technologies and forensic operations to be developed and tested independently.
+<p align="center">
+</p>
 
 ---
 
-# Architecture
+## What is ReSecureOS?
 
-```text
-                         ┌──────────────────────────────┐
-                         │        SIH SanitizerOS       │
-                         │                              │
-                         │     Linux Forensic System    │
-                         └──────────────┬───────────────┘
-                                        │
-              ┌─────────────────────────┼─────────────────────────┐
-              │                         │                         │
-              ▼                         ▼                         ▼
-     ┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-     │ Device Layer    │      │ Acquisition     │      │ Recovery        │
-     │                 │      │ Layer           │      │ Layer           │
-     │ Drive Discovery │      │ Write Protect   │      │ File Carving    │
-     │ Metadata        │      │ Disk Imaging    │      │ Validation      │
-     │ Bus Detection   │      │ SHA-256 Hash    │      │ Confidence      │
-     └────────┬────────┘      │ Evidence        │      │ Classification  │
-              │               └────────┬────────┘      └────────┬────────┘
-              │                        │                         │
-              └────────────────────────┼─────────────────────────┘
-                                       │
-                                       ▼
-                            ┌─────────────────────┐
-                            │  Sanitization Core  │
-                            │                     │
-                            │ Capability Probe    │
-                            │ Method Selection    │
-                            │ Hardware Sanitizers │
-                            │ Generic Clear       │
-                            └──────────┬──────────┘
-                                       │
-                                       ▼
-                            ┌─────────────────────┐
-                            │    Verification     │
-                            │                     │
-                            │ Operation Status    │
-                            │ Read-back Checks    │
-                            │ Result Generation   │
-                            └──────────┬──────────┘
-                                       │
-                                       ▼
-                            ┌─────────────────────┐
-                            │ UI / CLI / Reports  │
-                            └─────────────────────┘
-````
+**ReSecureOS** is an open-source Linux-based platform designed to bring digital forensics, data recovery, forensic acquisition, and secure storage sanitization into a single environment.
+
+Instead of requiring multiple independent tools and workflows, ReSecureOS aims to provide investigators, researchers, security professionals, and storage engineers with a unified platform for working with storage devices.
+
+The project combines a modular **C++17 core**, a lightweight **Python GUI**, Linux device interfaces, and hardware-aware storage sanitization.
+
+### Core capabilities
+
+* 🔍 Storage device discovery
+* 💽 Device metadata inspection
+* 🛡️ Write-protected forensic acquisition
+* 📀 Disk imaging
+* 🔐 SHA-256 evidence hashing
+* 🧩 Deleted-file carving
+* ✅ File validation
+* 📊 Recovery confidence scoring
+* 🗂️ Recovered-file classification
+* 🧹 Capability-driven storage sanitization
+* ⚡ NVMe sanitization
+* 💾 ATA sanitization
+* 🔧 SCSI sanitization
+* 🔄 Generic block-level clearing
+* 🔎 Post-operation verification
+* 📋 Evidence manifests
+* 📝 Audit information
+* 🖥️ Linux graphical interface
 
 ---
 
-# Core Capabilities
+# Screenshots
 
-## 1. Storage Device Discovery
+> UI screenshots are stored in `assets/screenshots/`.
 
-The device layer discovers block storage devices through Linux system interfaces and exposes a unified representation of each drive.
+## Device Management
 
-Collected information includes:
+ReSecureOS identifies available storage devices and presents information such as:
 
 * Device path
 * Model
 * Vendor
 * Serial number
 * Capacity
-* Logical sector size
-* Physical sector size
-* Rotational state
 * Bus type
 * Media type
+* Mount status
+* Safety status
 
-Example:
+---
 
-```text
-Device      : /dev/sdb
-Model       : VMware Virtual Disk
-Serial      : -
-Capacity    : 3.00 GiB
-Bus         : SATA
-Media       : HDD
-Status      : SAFE
-```
+## Forensic Acquisition
 
-The abstraction is provided by:
+The acquisition workflow is designed around preserving the original storage device while creating a verifiable forensic image.
 
 ```text
-device/
-├── DriveInfo.h
-├── DriveManager.cpp
-└── DriveManager.h
+Storage Device
+      │
+      ▼
+Device Inspection
+      │
+      ▼
+Write Protection
+      │
+      ▼
+Disk Imaging
+      │
+      ▼
+SHA-256 Hash
+      │
+      ▼
+Evidence Manifest
+      │
+      ▼
+Forensic Image
 ```
 
 ---
 
-# 2. Forensic Acquisition
+## Data Recovery
 
-The acquisition subsystem provides controlled disk imaging for forensic workflows.
-
-### Acquisition pipeline
+The recovery subsystem analyzes disk images and attempts to identify recoverable files.
 
 ```text
-        Source Drive
-             │
-             ▼
-      Device Inspection
-             │
-             ▼
-      Write Protection
-             │
-             ▼
-        Disk Imaging
-             │
-             ▼
-        SHA-256 Hash
-             │
-             ▼
-      Evidence Manifest
-             │
-             ▼
-       Forensic Image
+Disk Image
+    │
+    ▼
+File Carving
+    │
+    ▼
+File Validation
+    │
+    ▼
+Confidence Scoring
+    │
+    ▼
+Classification
+    │
+    ▼
+Recovered Files
 ```
 
-### Components
-
-```text
-acquisition/
-├── AcquisitionManager.cpp
-├── AcquisitionManager.h
-├── DiskImager.cpp
-├── DiskImager.h
-├── HashEngine.cpp
-├── HashEngine.h
-├── WriteProtection.cpp
-└── WriteProtection.h
-```
-
-The acquisition system records information such as:
-
-* Source device
-* Device model
-* Serial number
-* Image destination
-* Image size
-* SHA-256 hash
-* Acquisition status
-* Timestamp
-* Write-protection state
-
-This allows the generated image to be independently verified after acquisition.
-
----
-
-# 3. Deleted-File Recovery
-
-The recovery subsystem analyzes raw disk images and attempts to identify recoverable file structures.
-
-### Recovery pipeline
-
-```text
-          Disk Image
-              │
-              ▼
-         File Carving
-              │
-              ▼
-        File Validation
-              │
-              ▼
-       Confidence Scoring
-              │
-              ▼
-       File Classification
-              │
-              ▼
-       Recovered Files
-```
-
-### Components
-
-```text
-recovery/
-├── FileCarver.cpp
-├── FileCarver.h
-├── FileValidator.cpp
-├── FileValidator.h
-├── ConfidenceScorer.cpp
-├── ConfidenceScorer.h
-├── FileClassifier.cpp
-├── FileClassifier.h
-└── RecoveredFile.h
-```
-
-The recovery pipeline provides more than simple signature matching.
-
-Each candidate can contain:
+Recovered candidates can contain:
 
 * File type
 * Start offset
 * End offset
 * Recovered size
-* Validation result
+* Validation status
 * Confidence level
 * Category
 * Output path
 * SHA-256 hash
 
-Example:
+---
+
+## Secure Sanitization
+
+ReSecureOS uses a **capability-driven sanitization model**.
+
+The system does not blindly apply the same sanitization technique to every storage device.
+
+Instead, it first identifies the device and determines which supported sanitization mechanisms are available.
 
 ```text
-Type    : JPEG
-Size    : 2.0 KB
-Status  : VALID
-Confidence: MEDIUM
-Category: Images
+                    Target Device
+                         │
+                         ▼
+                  Safety Checks
+                         │
+                         ▼
+                Capability Detection
+                         │
+             ┌───────────┼───────────┐
+             │           │           │
+             ▼           ▼           ▼
+           NVMe         ATA         SCSI
+             │           │           │
+             ▼           ▼           ▼
+        NVMe Method  ATA Method  SCSI Method
+             │           │           │
+             └───────────┼───────────┘
+                         │
+                         ▼
+                    Verification
+                         │
+                         ▼
+                    Audit Result
 ```
+
+Supported architecture includes:
+
+* NVMe sanitization
+* ATA sanitization / secure erase mechanisms
+* SCSI sanitization
+* Generic block-level clearing where appropriate
 
 ---
 
-# 4. Capability-Driven Sanitization
-
-Sanitization is designed around the principle that **different storage technologies require different sanitization mechanisms**.
-
-Instead of blindly applying one wipe algorithm to every device, SIH SanitizerOS probes the target device and determines which operations are available.
+# Architecture
 
 ```text
-                 Target Drive
-                      │
-                      ▼
-             Capability Probe
-                      │
-          ┌───────────┼───────────┐
-          │           │           │
-          ▼           ▼           ▼
-        NVMe         ATA         SCSI
-          │           │           │
-          ▼           ▼           ▼
-      NVMe        ATA Sanitize  SCSI
-      Sanitize    / Secure      Sanitize
-          │        Erase          │
-          └───────────┼───────────┘
-                      │
-                      ▼
-              Generic CLEAR
-                 fallback
+                         ┌──────────────────────────┐
+                         │        ReSecureOS         │
+                         │                          │
+                         │  Portable Linux Platform │
+                         └────────────┬─────────────┘
+                                      │
+              ┌───────────────────────┼───────────────────────┐
+              │                       │                       │
+              ▼                       ▼                       ▼
+       ┌─────────────┐        ┌──────────────┐        ┌─────────────┐
+       │   Device    │        │ Acquisition  │        │  Recovery   │
+       │   Layer     │        │    Layer     │        │    Layer    │
+       │             │        │              │        │             │
+       │ Discovery   │        │ Write Protect│        │ File Carving│
+       │ Metadata    │        │ Disk Imaging │        │ Validation  │
+       │ Bus Detect  │        │ SHA-256      │        │ Confidence  │
+       └──────┬──────┘        └──────┬───────┘        └──────┬──────┘
+              │                      │                       │
+              └──────────────────────┼───────────────────────┘
+                                     │
+                                     ▼
+                           ┌─────────────────────┐
+                           │    Sanitization     │
+                           │       Engine        │
+                           │                     │
+                           │ Capability Detection│
+                           │ Method Selection    │
+                           │ NVMe / ATA / SCSI   │
+                           │ Generic Fallback    │
+                           └──────────┬──────────┘
+                                      │
+                                      ▼
+                           ┌─────────────────────┐
+                           │    Verification     │
+                           │                     │
+                           │ Read-back Checks    │
+                           │ Result Generation   │
+                           └──────────┬──────────┘
+                                      │
+                                      ▼
+                           ┌─────────────────────┐
+                           │    UI / CLI /       │
+                           │    Audit Reports    │
+                           └─────────────────────┘
 ```
-
-The sanitization subsystem contains:
-
-```text
-sanitization/
-├── SanitizationEngine.cpp
-├── SanitizationEngine.h
-├── DeviceCapabilityProbe.cpp
-├── DeviceCapabilityProbe.h
-├── DeviceCapabilities.h
-├── SanitizationResult.h
-├── GenericBlockSanitizer.cpp
-├── GenericBlockSanitizer.h
-├── AtaSanitizer.cpp
-├── AtaSanitizer.h
-├── NvmeSanitizer.cpp
-├── NvmeSanitizer.h
-├── ScsiSanitizer.cpp
-├── ScsiSanitizer.h
-├── Verification.cpp
-└── Verification.h
-```
-
-### Sanitization decision model
-
-```text
-Device
-  │
-  ▼
-Safety Checks
-  │
-  ├── System disk? ──────► REFUSE
-  │
-  ├── Mounted? ───────────► REFUSE
-  │
-  ▼
-Capability Detection
-  │
-  ├── NVMe sanitize available
-  │          │
-  │          ▼
-  │      NVMe Sanitizer
-  │
-  ├── ATA sanitize / erase available
-  │          │
-  │          ▼
-  │      ATA Sanitizer
-  │
-  ├── SCSI sanitize available
-  │          │
-  │          ▼
-  │      SCSI Sanitizer
-  │
-  └── No hardware method
-             │
-             ▼
-      Generic Block Clear
-```
-
----
-
-# 5. Sanitization Result & Audit Model
-
-Every sanitization operation produces a structured result rather than simply returning `true` or `false`.
-
-The result records:
-
-```text
-Device
-Bus
-Media
-Vendor
-Model
-Serial
-Capacity
-Method Applied
-Assurance Level
-Bytes Processed
-Wipe Status
-Verification Status
-Verification Method
-Samples Checked
-Duration
-Start Timestamp
-Completion Timestamp
-Error Information
-```
-
-Example:
-
-```text
-Device          : /dev/sdb
-Bus             : SATA
-Media           : SATA HDD
-Method          : Generic Block Clear
-Assurance       : CLEAR
-Capacity        : 3221225472 bytes
-Wipe            : PASS
-Verification    : PASS
-Samples Checked : 1000
-Status          : SUCCESS
-```
-
-This result model is intended to form the foundation for future sanitization certificates and audit reports.
-
----
-
-# 6. Verification
-
-Verification is treated as a separate subsystem.
-
-For logical CLEAR operations, the current verification implementation performs randomized read-back sampling.
-
-```text
-        Sanitization
-             │
-             ▼
-       Verification
-             │
-       ┌─────┴─────┐
-       │           │
-       ▼           ▼
-     PASS         FAIL
-       │           │
-       ▼           ▼
-   Completed     Report
-```
-
-The verification layer uses direct I/O when supported and falls back to buffered reads when required by the device or virtualized environment.
-
----
-
-# 7. Safety System
-
-Storage sanitization is destructive, therefore safety checks are performed before any destructive operation.
-
-The engine checks for conditions such as:
-
-* Active system disk
-* Mounted storage
-* Device accessibility
-* Device capabilities
-* Supported sanitization method
-
-Example safety behavior:
-
-```text
-/dev/sda
-SYSTEM (Protected)
-        │
-        ▼
-  Sanitization Refused
-```
-
-while a disposable test disk may appear as:
-
-```text
-/dev/sdb
-SAFE (Unmounted)
-        │
-        ▼
-  Eligible for Operation
-```
-
-> **Never assume `/dev/sda`, `/dev/sdb`, etc. refers to a particular physical drive. Always verify the device path, model, serial number, capacity and mount state before performing destructive operations.**
-
----
-
-# User Interface
-
-The project includes a lightweight Linux GUI designed around the major forensic workflows.
-
-### Device
-
-```text
-┌──────────────────────────────────────────────┐
-│ Devices                                      │
-├──────────────────────────────────────────────┤
-│ Device │ Model │ Capacity │ Bus │ Status     │
-│ /dev/sda │ ... │ 40 GB   │ SATA│ SYSTEM      │
-│ /dev/sdb │ ... │ 3 GB    │ SATA│ SAFE        │
-└──────────────────────────────────────────────┘
-```
-
-### Acquisition
-
-Provides:
-
-* Source device selection
-* Destination image selection
-* Acquisition execution
-* Evidence manifest
-* SHA-256 verification
-
-### Recovery
-
-Provides:
-
-* Disk-image selection
-* File carving
-* Validation
-* Confidence scoring
-* File classification
-* Recovered-file output
-
-### Sanitization
-
-Provides:
-
-* Drive inspection
-* Device safety status
-* Sanitization method
-* Confirmation dialog
-* Sanitization execution
-* Result reporting
 
 ---
 
 # Project Structure
 
 ```text
-dataRecoveryAndSanatization/
+ReSecureOS/
 │
 ├── UI/
 │   ├── ui.py
@@ -513,12 +243,6 @@ dataRecoveryAndSanatization/
 │   ├── HashEngine.h
 │   ├── WriteProtection.cpp
 │   └── WriteProtection.h
-│
-├── apps/
-│   ├── acquisition-test/
-│   ├── device-test/
-│   ├── recovery-test/
-│   └── sanitizer/
 │
 ├── device/
 │   ├── DriveInfo.h
@@ -554,51 +278,69 @@ dataRecoveryAndSanatization/
 │   ├── Verification.cpp
 │   └── Verification.h
 │
+├── apps/
+│   ├── acquisition-test/
+│   ├── device-test/
+│   ├── recovery-test/
+│   └── sanitizer/
+│
 ├── os/
 │   └── launcher/
 │
+├── assets/
+│   ├── screenshots/
+│   ├── logo/
+│   └── banner/
+│
 ├── CMakeLists.txt
 ├── README.md
-└── LICENSE
+├── LICENSE
+└── CONTRIBUTING.md
 ```
 
 ---
 
 # Technology Stack
 
-| Technology           | Purpose                                            |
-| -------------------- | -------------------------------------------------- |
-| **C++17**            | Core storage and forensic engine                   |
-| **CMake**            | Build system                                       |
-| **Python 3**         | GUI/application layer                              |
-| **Tkinter**          | Lightweight Linux GUI                              |
-| **pybind11**         | Python ↔ C++ bridge                                |
-| **OpenSSL**          | Cryptographic hashing                              |
-| **Linux/POSIX APIs** | Raw block-device operations                        |
-| **NVMe ioctl**       | NVMe device operations                             |
-| **SCSI SG_IO**       | SCSI/ATA passthrough                               |
-| **libblkid**         | Block-device/filesystem information                |
-| **The Sleuth Kit**   | Filesystem/forensic functionality where applicable |
+| Technology         | Purpose                           |
+| ------------------ | --------------------------------- |
+| **Linux**          | Operating system platform         |
+| **C++17**          | Core forensic and storage engine  |
+| **CMake**          | Build system                      |
+| **Python 3**       | Application/UI layer              |
+| **Tkinter**        | Lightweight GUI                   |
+| **pybind11**       | Python ↔ C++ integration          |
+| **OpenSSL**        | SHA-256 hashing                   |
+| **libblkid**       | Block-device information          |
+| **libudev**        | Device discovery                  |
+| **NVMe ioctl**     | NVMe device operations            |
+| **SCSI SG_IO**     | Storage command passthrough       |
+| **The Sleuth Kit** | Filesystem forensic functionality |
 
 ---
 
-# Requirements
+# Installation
 
-The recommended development environment is Linux.
+## Requirements
 
-Tested development direction:
+ReSecureOS is currently developed for Linux.
+
+Recommended environment:
 
 ```text
-Debian Linux
-    │
-    ├── Xorg
-    ├── Openbox
-    ├── Python 3
-    ├── Tkinter
-    └── C++17 toolchain
+Linux
+ ├── C++17 compiler
+ ├── CMake
+ ├── Python 3
+ ├── Tkinter
+ ├── pybind11
+ ├── OpenSSL
+ ├── libblkid
+ ├── libudev
+ └── The Sleuth Kit
 ```
 
-## Debian / Ubuntu dependencies
+### Debian / Ubuntu
 
 ```bash
 sudo apt update
@@ -618,16 +360,6 @@ sudo apt install \
     libtsk-dev
 ```
 
-For the graphical environment:
-
-```bash
-sudo apt install \
-    xorg \
-    openbox \
-    xterm \
-    xinit
-```
-
 ---
 
 # Build
@@ -635,8 +367,8 @@ sudo apt install \
 Clone the repository:
 
 ```bash
-git clone https://github.com/sanyampat/dataRecoveryAndSanatization.git
-cd dataRecoveryAndSanatization
+git clone https://github.com/sanyampat/ReSecureOS.git
+cd ReSecureOS
 ```
 
 Create a build directory:
@@ -660,201 +392,181 @@ cmake --build . -j$(nproc)
 
 ---
 
-# Python / C++ Bridge
-
-The graphical interface communicates with the C++ core through a `pybind11` module.
-
-After building:
-
-```bash
-cd /path/to/dataRecoveryAndSanatization
-PYTHONPATH="$PWD/UI" python3 -c \
-'import cpp_sanitizer; print("CPP SANITIZER OK")'
-```
-
-Expected output:
-
-```text
-CPP SANITIZER OK
-```
-
----
-
 # Running the GUI
 
 From the repository root:
 
 ```bash
-cd /path/to/dataRecoveryAndSanatization
 PYTHONPATH="$PWD/UI" python3 UI/ui.py
 ```
 
-For the intended lightweight Linux environment, the GUI can be launched automatically through Xorg/Openbox.
+---
+
+# Sanitization Safety
+
+**ReSecureOS performs destructive storage operations.**
+
+Before sanitizing a device, always verify:
+
+1. Device path
+2. Model
+3. Serial number
+4. Capacity
+5. Mount state
+6. System-disk status
+7. Sanitization capability
+8. Intended target device
 
 Example:
-
-```bash
-#!/bin/sh
-
-openbox &
-
-cd /path/to/dataRecoveryAndSanatization
-
-exec python3 UI/ui.py
-```
-
----
-
-# Testing
-
-## Device discovery
-
-Build and run the device test:
-
-```bash
-./build/device-test
-```
-
-or:
-
-```bash
-sudo ./build/device-test
-```
-
----
-
-## Acquisition
-
-The acquisition workflow should be tested only against:
-
-* Disposable drives
-* Test virtual disks
-* Forensic copies
-* Authorized evidence media
-
-Never experiment with the operating system disk.
-
----
-
-## Recovery
-
-A typical recovery workflow is:
-
-```text
-Test Disk
-    │
-    ▼
-Create Raw Image
-    │
-    ▼
-Delete Test Files
-    │
-    ▼
-Run File Carver
-    │
-    ▼
-Validate Candidates
-    │
-    ▼
-Score Confidence
-    │
-    ▼
-Classify
-    │
-    ▼
-Recover
-```
-
-Recovered files should be independently checked using standard tools such as:
-
-```bash
-file recovered-file
-```
-
-and where appropriate:
-
-```bash
-sha256sum recovered-file
-```
-
----
-
-# Sanitization Testing
-
-**Only test sanitization against a disposable device or virtual disk.**
-
-Example safe development environment:
-
-```text
-VMware / QEMU
-      │
-      ▼
-Disposable virtual disk
-      │
-      ▼
-/dev/sdb
-      │
-      ▼
-Sanitization testing
-```
-
-Never assume `/dev/sdb` is safe merely because it is named `/dev/sdb`.
-
-Before destructive testing:
 
 ```bash
 lsblk -o NAME,SIZE,MODEL,SERIAL,TYPE,MOUNTPOINTS
 ```
 
-Verify:
+Never assume that:
 
-* Correct device
-* Correct capacity
-* Correct model
-* Correct serial number
-* No important partitions
-* No mounted filesystems
+```text
+/dev/sda
+/dev/sdb
+/dev/nvme0n1
+```
+
+refers to a particular physical device.
+
+Linux device names can change depending on hardware configuration and boot order.
 
 ---
 
-# Standards & Sanitization Philosophy
+# Sanitization Philosophy
 
-The project follows a **capability-driven** sanitization model.
+ReSecureOS follows a **capability-driven sanitization model**.
 
-The objective is not to claim that every device can be securely sanitized using the same technique.
-
-Different storage technologies have different characteristics:
+Different storage technologies behave differently, so the platform attempts to select an appropriate mechanism based on the capabilities of the target device.
 
 ```text
 HDD
- └── Block-level overwrite may provide CLEAR
+ └── Block-level overwrite where appropriate
 
 SATA SSD
  └── Prefer device-supported sanitization mechanisms
-     where available
 
 NVMe SSD
- └── Prefer NVMe Sanitize / supported device-level methods
+ └── Prefer supported NVMe device-level mechanisms
 
 SCSI
  └── Use supported SCSI sanitization mechanisms
 
 USB / Virtual / Unknown
- └── Use an appropriate fallback and clearly report
-     the achievable assurance level
+ └── Use an appropriate fallback
+     and clearly report the achievable assurance
 ```
 
-The project distinguishes between:
+ReSecureOS distinguishes between different assurance levels rather than assuming that every device can be sanitized identically.
 
-### CLEAR
+The software should not claim a stronger sanitization assurance than the available device capabilities and verification evidence support.
 
-A logical sanitization operation such as block-level overwriting.
+---
 
-### PURGE
+# Verification
 
-A device-level sanitization mechanism intended to provide stronger protection against recovery than ordinary logical overwriting.
+Verification is treated as a separate subsystem.
 
-The software should **not claim PURGE merely because a command was issued**. The actual device capability, command result and verification evidence must support the reported outcome.
+For logical clearing operations, the current architecture supports randomized read-back sampling.
+
+```text
+Sanitization
+     │
+     ▼
+Verification
+     │
+ ┌───┴───┐
+ ▼       ▼
+PASS    FAIL
+ │       │
+ ▼       ▼
+Done    Report
+```
+
+Verification results can be included in the sanitization result and audit information.
+
+---
+
+# Forensic Acquisition
+
+ReSecureOS provides a controlled acquisition workflow designed to preserve evidence integrity.
+
+```text
+Source Device
+      │
+      ▼
+Device Inspection
+      │
+      ▼
+Write Protection
+      │
+      ▼
+Disk Imaging
+      │
+      ▼
+SHA-256 Hash
+      │
+      ▼
+Evidence Manifest
+      │
+      ▼
+Forensic Image
+```
+
+Acquisition metadata can include:
+
+* Source device
+* Device model
+* Serial number
+* Image destination
+* Image size
+* SHA-256 hash
+* Acquisition status
+* Timestamp
+* Write-protection state
+
+---
+
+# Data Recovery
+
+The recovery subsystem works primarily from disk images rather than modifying original evidence.
+
+```text
+Disk Image
+     │
+     ▼
+File Carving
+     │
+     ▼
+Validation
+     │
+     ▼
+Confidence Scoring
+     │
+     ▼
+Classification
+     │
+     ▼
+Recovered Files
+```
+
+Recovered files can be independently validated using standard Linux tools.
+
+Example:
+
+```bash
+file recovered-file
+```
+
+and:
+
+```bash
+sha256sum recovered-file
+```
 
 ---
 
@@ -867,7 +579,6 @@ The software should **not claim PURGE merely because a command was issued**. The
 * [x] Linux block-device interaction
 * [x] C++17 modular architecture
 * [x] CMake build system
-* [x] Forensic acquisition architecture
 * [x] Disk imaging
 * [x] SHA-256 hashing
 * [x] Write-protection abstraction
@@ -886,33 +597,33 @@ The software should **not claim PURGE merely because a command was issued**. The
 * [x] Post-operation verification architecture
 * [x] System/mounted-device safety guards
 
-## In Progress
+## In Development
 
 * [ ] Hardware-wide sanitization validation
 * [ ] Improved ATA passthrough compatibility
 * [ ] Improved SCSI capability detection
 * [ ] Device-specific verification strategies
 * [ ] Stronger system-disk/LVM detection
-* [ ] Comprehensive hardware compatibility testing
-* [ ] Automated regression tests
+* [ ] Automated regression testing
 * [ ] Sanitization certificates
 * [ ] Full forensic audit logging
-* [ ] Bootable live environment
+* [ ] Bootable Live ISO
 * [ ] Hardware compatibility database
+* [ ] Production deployment image
 
 ---
 
 # Roadmap
 
-## Phase 1 — Core Platform
+### Phase 1 — Core Platform
 
 * [x] Device discovery
-* [x] Drive metadata
+* [x] Device metadata
 * [x] Modular architecture
 * [x] CMake build
 * [x] Linux integration
 
-## Phase 2 — Forensic Acquisition
+### Phase 2 — Forensic Acquisition
 
 * [x] Disk imaging
 * [x] SHA-256 hashing
@@ -920,7 +631,7 @@ The software should **not claim PURGE merely because a command was issued**. The
 * [x] Evidence manifest
 * [ ] Extended acquisition logging
 
-## Phase 3 — Recovery
+### Phase 3 — Recovery
 
 * [x] File carving
 * [x] File validation
@@ -931,25 +642,23 @@ The software should **not claim PURGE merely because a command was issued**. The
 * [ ] Advanced filesystem recovery
 * [ ] Recovery reporting
 
-## Phase 4 — Sanitization
+### Phase 4 — Sanitization
 
 * [x] Sanitization engine
-* [x] Capability detection architecture
+* [x] Capability detection
 * [x] Device-specific sanitizer architecture
-* [x] Generic block fallback
+* [x] Generic fallback
 * [x] Result/audit structure
-* [ ] ATA command hardening
+* [ ] ATA hardening
 * [ ] NVMe hardware validation
-* [ ] SCSI command validation
+* [ ] SCSI validation
 * [ ] Media-aware verification
 * [ ] Sanitization certificates
-* [ ] Hardware compatibility testing
 
-## Phase 5 — SIH SanitizerOS
+### Phase 5 — ReSecureOS
 
-* [x] Minimal Linux development environment
-* [x] Xorg/Openbox GUI environment
-* [x] Python/Tkinter interface
+* [x] Linux development environment
+* [x] GUI
 * [ ] Bootable ISO
 * [ ] Automatic GUI startup
 * [ ] Offline forensic toolkit
@@ -960,114 +669,30 @@ The software should **not claim PURGE merely because a command was issued**. The
 
 ---
 
-# Security Considerations
+# Open Source
 
-This project performs operations directly against storage devices.
+ReSecureOS is intended to be developed as an open-source project.
 
-### Forensic acquisition
+Contributions are welcome from developers, cybersecurity researchers, digital forensics practitioners, Linux developers, storage engineers, and students.
 
-Whenever possible:
+Areas where contributions are especially useful include:
 
-* Use write protection.
-* Preserve the original evidence.
-* Work from forensic images.
-* Hash acquired images.
-* Preserve acquisition metadata.
+* Storage hardware compatibility
+* Filesystem support
+* Forensic acquisition
+* Recovery algorithms
+* NVMe/ATA/SCSI support
+* Verification mechanisms
+* GUI development
+* Testing
+* Documentation
+* Live ISO development
 
-### Sanitization
-
-Before any destructive operation:
-
-1. Confirm the physical device.
-2. Confirm model and serial number.
-3. Confirm capacity.
-4. Confirm the device is not the system disk.
-5. Confirm partitions are not mounted.
-6. Confirm the device is disposable or explicitly authorized.
-7. Confirm the sanitization method.
-8. Record the result.
-
-### Never do this
-
-```text
-"sudo ./sanitizer /dev/sda"
-```
-
-without first verifying what `/dev/sda` actually represents.
-
-Device names are assigned dynamically by Linux and can change between boots or hardware configurations.
-
----
-
-# Example End-to-End Workflow
-
-```text
-                ┌─────────────────┐
-                │ Storage Device  │
-                └────────┬────────┘
-                         │
-                         ▼
-                ┌─────────────────┐
-                │ Device Discovery│
-                └────────┬────────┘
-                         │
-                         ▼
-                ┌─────────────────┐
-                │ Device Inspection│
-                └────────┬────────┘
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-              ▼                     ▼
-        Forensic Workflow     Sanitization
-              │                     │
-              ▼                     ▼
-       Write Protection       Safety Checks
-              │                     │
-              ▼                     ▼
-        Disk Imaging         Capability Probe
-              │                     │
-              ▼                     ▼
-          SHA-256              Method Select
-              │                     │
-              ▼                     ▼
-        Evidence Image        Device Sanitizer
-              │                     │
-              ▼                     ▼
-        File Recovery          Verification
-              │                     │
-              └──────────┬──────────┘
-                         │
-                         ▼
-                  Audit / Report
-```
-
----
-
-# Project Goals
-
-The long-term goal of SIH SanitizerOS is to provide a **portable Linux-based forensic and storage-sanitization environment** that can operate independently of a host operating system.
-
-The intended platform will eventually provide:
-
-* Bootable forensic environment
-* Device discovery
-* Evidence acquisition
-* Recovery tools
-* Storage sanitization
-* Device capability detection
-* Hardware-specific sanitization
-* Verification
-* Evidence manifests
-* Audit logs
-* Sanitization certificates
-* Portable offline operation
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.
 
 ---
 
 # Contributing
-
-Contributions are welcome.
 
 Create a feature branch:
 
@@ -1075,7 +700,9 @@ Create a feature branch:
 git checkout -b feature/your-feature
 ```
 
-Make your changes:
+Make your changes and test them using disposable devices or virtual disks where applicable.
+
+Commit:
 
 ```bash
 git add .
@@ -1090,7 +717,7 @@ git push origin feature/your-feature
 
 Then open a Pull Request.
 
-When contributing:
+### Contribution principles
 
 * Keep modules separated by responsibility.
 * Prefer modern C++ practices.
@@ -1098,82 +725,107 @@ When contributing:
 * Test storage operations using disposable devices.
 * Document hardware-specific behavior.
 * Clearly identify experimental functionality.
-* Do not claim sanitization assurance without appropriate evidence.
+* Never claim sanitization assurance without appropriate evidence.
 * Add regression tests for new functionality.
 
 ---
 
-# Disclaimer
+# Testing
 
-SIH SanitizerOS is intended for:
+Storage operations should be tested against:
 
-* Authorized digital forensics
-* Data recovery
-* Storage research
-* Authorized storage sanitization
-* Security research
-* Educational purposes
+* Disposable drives
+* Virtual disks
+* Test images
+* Authorized evidence media
 
-Sanitization operations can permanently destroy data.
+A safe development environment can use:
 
-**Only operate on storage devices that you own or have explicit authorization to process.**
+```text
+QEMU / VMware
+      │
+      ▼
+Disposable Virtual Disk
+      │
+      ▼
+ReSecureOS
+      │
+      ▼
+Testing
+```
 
-The authors are not responsible for:
+**Never use your operating-system disk for destructive testing.**
 
-* Data loss
-* Hardware damage
-* Incorrect device selection
-* Misuse of the software
-* Unauthorized data processing
+---
+
+# Security
+
+If you discover a security vulnerability in ReSecureOS, please avoid publicly posting sensitive exploit details before the issue can be investigated.
+
+A dedicated security policy and responsible disclosure process will be added as the project matures.
 
 ---
 
 # License
 
+ReSecureOS is open source.
+
 See [`LICENSE`](LICENSE) for the applicable license.
 
 ---
 
-# Project
+# Project Status
 
-**SIH SanitizerOS — Data Recovery & Secure Sanitization**
+🚧 **ReSecureOS is currently under active development.**
 
-GitHub:
+Some features, particularly hardware-specific sanitization and the bootable operating-system environment, are experimental and require additional hardware validation.
 
-[https://github.com/sanyampat/dataRecoveryAndSanatization](https://github.com/sanyampat/dataRecoveryAndSanatization)
+Do not treat experimental functionality as a production-grade sanitization guarantee.
 
-Built as a Smart India Hackathon-oriented project focused on:
+---
+
+# Vision
+
+The long-term goal of ReSecureOS is to become a **portable, offline forensic and storage-security operating system** that can boot directly from removable media and provide investigators and security professionals with a complete storage workflow.
 
 ```text
-Digital Forensics
-        +
-Data Recovery
-        +
-Forensic Acquisition
-        +
-Secure Data Sanitization
-        +
-Linux Systems
+                ReSecureOS
+                    │
+        ┌───────────┼───────────┐
+        │           │           │
+        ▼           ▼           ▼
+     Acquire     Recover     Resecure
+        │           │           │
+        └───────────┼───────────┘
+                    │
+                    ▼
+                Verify
+                    │
+                    ▼
+                 Report
 ```
 
 ---
 
 ## ⭐ Support the Project
 
-If you find SIH SanitizerOS useful, consider giving the repository a ⭐ and contributing improvements.
+If ReSecureOS is useful to you:
 
-**Repository:**
-[https://github.com/sanyampat/dataRecoveryAndSanatization](https://github.com/sanyampat/dataRecoveryAndSanatization)
+* ⭐ Star the repository
+* 🐛 Report bugs
+* 💡 Suggest features
+* 🔧 Submit pull requests
+* 📖 Improve documentation
+* 🧪 Test on additional storage hardware
 
-```
+Every contribution helps make ReSecureOS better.
 
-### One important change from your current README
+---
 
-I deliberately **removed the old claims that the sanitizer simply maps `SCSI / USB / Unknown → HDD sanitizer`** because the current architecture has moved to capability probing and separate NVMe/ATA/SCSI/generic paths. Your current engine explicitly probes capabilities and dispatches to `NvmeSanitizer`, `AtaSanitizer`, `ScsiSanitizer`, or `GenericBlockSanitizer`. :contentReference[oaicite:1]{index=1}
+## ReSecureOS
 
-I also wouldn't call the current project **"production-ready"** yet. The repository itself currently lists hardware compatibility, automated testing, audit logging, and the bootable environment as unfinished work. :contentReference[oaicite:2]{index=2}
+**Recover. Acquire. Verify. Resecure.**
 
-If you want, I can also make you a **much more polished GitHub README with a hero banner, feature cards, architecture diagram, badges, screenshots section, demo GIF section, and a professional SIH project presentation style**.
-```
+Built for:
 
-[1]: https://github.com/sanyampat/dataRecoveryAndSanatization "GitHub - sanyampat/dataRecoveryAndSanatization · GitHub"
+**Digital Forensics · Data Recovery · Evidence Acquisition · Storage Security · Linux**
