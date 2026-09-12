@@ -111,7 +111,7 @@ ReSecureOS therefore follows a **capability-driven architecture**.
 
 # Core Features
 
-## 🔍 Device Discovery
+## Device Discovery
 
 ReSecureOS discovers block storage devices through Linux system
 interfaces and provides a unified representation of each device.
@@ -144,7 +144,7 @@ Status      : SAFE
 
 ---
 
-# 💽 Forensic Acquisition
+# Forensic Acquisition
 
 The acquisition subsystem provides controlled disk imaging for
 forensic workflows.
@@ -188,7 +188,7 @@ subsequent analysis against the acquired image.
 
 ---
 
-# 🧩 Data Recovery
+# Data Recovery
 
 ReSecureOS provides a modular recovery pipeline for analyzing disk
 images and identifying potentially recoverable files.
@@ -238,7 +238,7 @@ Category    : Images
 
 ---
 
-# 🛡️ Secure Storage Sanitization
+# Secure Storage Sanitization
 
 ReSecureOS contains a capability-driven sanitization architecture
 designed to select an appropriate method based on the storage device.
@@ -311,7 +311,7 @@ physical storage location.
 
 ---
 
-# 🔎 Verification
+# Verification
 
 Verification is implemented as a separate subsystem.
 
@@ -346,7 +346,7 @@ Verification results can include:
 
 ---
 
-# 🧾 Sanitization Results & Audit Information
+# Sanitization Results & Audit Information
 
 Every sanitization operation produces a structured result rather than
 simply returning a success/failure value.
@@ -381,7 +381,7 @@ This result model provides the foundation for future:
 
 ---
 
-# 🖥️ User Interface
+# User Interface
 
 ReSecureOS currently includes a lightweight Linux GUI built with
 Python/Tkinter.
