@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <p align="center">
   <img src="assets/banner/resecureos-banner.svg" alt="ReSecureOS" width="100%">
 </p>
@@ -7,14 +6,6 @@
   <img src="assets/logo/resecureos-logo.svg" alt="ReSecureOS logo" width="28" valign="middle">
   ReSecureOS
 </h1>
-=======
-````md
-<p align="center">
-  <img src="assets/banner/resecureos-banner.png" alt="ReSecureOS" width="100%">
-</p>
-
-<h1 align="center">ReSecureOS</h1>
->>>>>>> f47e4e42668f3427ee6fe12b4a7f02e1635cafd8
 
 <p align="center">
   <strong>Recover · Acquire · Verify · Resecure</strong>
@@ -114,49 +105,10 @@ ReSecureOS therefore follows a **capability-driven architecture**.
                              │
                              ▼
                        Audit / Report
-<<<<<<< HEAD
-=======
-````
-
----
-
-# Core Features
-
-## 🔍 Device Discovery
-
-ReSecureOS discovers block storage devices through Linux system
-interfaces and provides a unified representation of each device.
-
-Device information can include:
-
-* Device path
-* Vendor
-* Model
-* Serial number
-* Capacity
-* Logical sector size
-* Physical sector size
-* Rotational state
-* Bus type
-* Media type
-* Mount state
-
-Example:
-
-```text
-Device      : /dev/sdb
-Model       : VMware Virtual Disk
-Serial      : -
-Capacity    : 3.00 GiB
-Bus         : SATA
-Media       : HDD
-Status      : SAFE
->>>>>>> f47e4e42668f3427ee6fe12b4a7f02e1635cafd8
 ```
 
 ---
 
-<<<<<<< HEAD
 # Core Features
 
 ## 🔍 Device Discovery
@@ -194,10 +146,6 @@ Status      : SAFE
 
 # 💽 Forensic Acquisition
 
-=======
-# 💽 Forensic Acquisition
-
->>>>>>> f47e4e42668f3427ee6fe12b4a7f02e1635cafd8
 The acquisition subsystem provides controlled disk imaging for
 forensic workflows.
 
@@ -571,15 +519,9 @@ ReSecureOS/
 │
 ├── assets/
 │   ├── banner/
-<<<<<<< HEAD
 │   │   └── resecureos-banner.svg
 │   ├── logo/
 │   │   └── resecureos-logo.svg
-=======
-│   │   └── resecureos-banner.png
-│   ├── logo/
-│   │   └── resecureos-logo.png
->>>>>>> f47e4e42668f3427ee6fe12b4a7f02e1635cafd8
 │   └── screenshots/
 │       ├── acquisition.png
 │       ├── devices.png
@@ -1065,7 +1007,6 @@ verification, and audit capabilities in one platform.
 
 ---
 
-<<<<<<< HEAD
 <p align="center">
   <img src="assets/logo/resecureos-logo.svg" alt="ReSecureOS logo" width="60">
 </p>
@@ -1083,55 +1024,3 @@ verification, and audit capabilities in one platform.
   🔧 Contribute code &nbsp;·&nbsp;
   📖 Improve the documentation
 </p>
-=======
-# ReSecureOS
-
-### Recover. Acquire. Verify. Resecure.
-
-**Digital Forensics · Data Recovery · Evidence Acquisition · Storage Security · Linux**
-
-⭐ Star the repository if you find the project useful.
-
-🐛 Report issues.
-
-💡 Propose improvements.
-
-🔧 Contribute code.
-
-📖 Improve the documentation.
-
-````
-
-### One thing I strongly recommend
-
-Before you push this README, make your repository look like this:
-
-```text
-ReSecureOS/
-│
-├── assets/
-│   ├── banner/
-│   │   └── resecureos-banner.png
-│   │
-│   ├── logo/
-│   │   └── resecureos-logo.png
-│   │
-│   └── screenshots/
-│       ├── devices.png
-│       ├── acquisition.png
-│       ├── recovery.png
-│       └── sanitization.png
-│
-├── acquisition/
-├── apps/
-├── device/
-├── recovery/
-├── sanitization/
-├── os/
-│
-├── CMakeLists.txt
-├── README.md
-├── LICENSE
-└── CONTRIBUTING.md
-````
->>>>>>> f47e4e42668f3427ee6fe12b4a7f02e1635cafd8
