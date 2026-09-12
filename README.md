@@ -1,102 +1,197 @@
-# ReSecureOS
+<p align="center">
+  <img src="assets/banner/resecureos-banner.svg" alt="ReSecureOS" width="100%">
+</p>
 
-### Open-Source Linux Platform for Digital Forensics, Data Recovery & Secure Storage Sanitization
+<h1 align="center">
+  <img src="assets/logo/resecureos-logo.svg" alt="ReSecureOS logo" width="28" valign="middle">
+  ReSecureOS
+</h1>
 
 <p align="center">
-  <strong>Recover. Acquire. Verify. Resecure.</strong>
+  <strong>Recover · Acquire · Verify · Resecure</strong>
 </p>
 
 <p align="center">
-  A modular Linux-based platform for forensic acquisition, deleted-file recovery, storage analysis, and secure device sanitization.
+  Open-source Linux platform for digital forensics, data recovery,
+  forensic acquisition, and secure storage sanitization.
 </p>
 
 <p align="center">
+
+![Linux](https://img.shields.io/badge/Platform-Linux-orange?style=for-the-badge)
+![C++17](https://img.shields.io/badge/C%2B%2B-17-blue?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3-yellow?style=for-the-badge)
+![CMake](https://img.shields.io/badge/Build-CMake-064F8C?style=for-the-badge)
+![OpenSSL](https://img.shields.io/badge/Crypto-OpenSSL-red?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active%20Development-green?style=for-the-badge)
+
 </p>
 
 ---
 
-## What is ReSecureOS?
+# About
 
-**ReSecureOS** is an open-source Linux-based platform designed to bring digital forensics, data recovery, forensic acquisition, and secure storage sanitization into a single environment.
+**ReSecureOS** is an open-source Linux-based platform designed for
+working with storage devices across the complete forensic lifecycle.
 
-Instead of requiring multiple independent tools and workflows, ReSecureOS aims to provide investigators, researchers, security professionals, and storage engineers with a unified platform for working with storage devices.
+The project combines:
 
-The project combines a modular **C++17 core**, a lightweight **Python GUI**, Linux device interfaces, and hardware-aware storage sanitization.
+- Storage device discovery
+- Device metadata inspection
+- Forensic acquisition
+- Disk imaging
+- SHA-256 evidence hashing
+- Deleted-file recovery
+- File carving
+- File validation
+- Confidence scoring
+- Recovered-file classification
+- Capability-driven storage sanitization
+- NVMe sanitization
+- ATA sanitization
+- SCSI sanitization
+- Generic block-level clearing
+- Post-operation verification
+- Evidence manifests
+- Audit information
+- Linux graphical workflows
 
-### Core capabilities
+ReSecureOS is built around a modular **C++17 core** with a
+**Python/Tkinter interface** connected through **pybind11**.
 
-* 🔍 Storage device discovery
-* 💽 Device metadata inspection
-* 🛡️ Write-protected forensic acquisition
-* 📀 Disk imaging
-* 🔐 SHA-256 evidence hashing
-* 🧩 Deleted-file carving
-* ✅ File validation
-* 📊 Recovery confidence scoring
-* 🗂️ Recovered-file classification
-* 🧹 Capability-driven storage sanitization
-* ⚡ NVMe sanitization
-* 💾 ATA sanitization
-* 🔧 SCSI sanitization
-* 🔄 Generic block-level clearing
-* 🔎 Post-operation verification
-* 📋 Evidence manifests
-* 📝 Audit information
-* 🖥️ Linux graphical interface
-
----
-
-# Screenshots
-
-> UI screenshots are stored in `assets/screenshots/`.
-
-## Device Management
-
-ReSecureOS identifies available storage devices and presents information such as:
-
-* Device path
-* Model
-* Vendor
-* Serial number
-* Capacity
-* Bus type
-* Media type
-* Mount status
-* Safety status
+The long-term goal is to provide a portable Linux environment that can
+perform forensic and storage-security operations independently of the
+host operating system.
 
 ---
 
-## Forensic Acquisition
+# Why ReSecureOS?
 
-The acquisition workflow is designed around preserving the original storage device while creating a verifiable forensic image.
+Storage devices require different approaches depending on their
+hardware, interface, capabilities, and intended operation.
+
+A conventional one-size-fits-all approach is not appropriate for every
+storage technology.
+
+ReSecureOS therefore follows a **capability-driven architecture**.
 
 ```text
-Storage Device
-      │
-      ▼
-Device Inspection
-      │
-      ▼
-Write Protection
-      │
-      ▼
-Disk Imaging
-      │
-      ▼
-SHA-256 Hash
-      │
-      ▼
-Evidence Manifest
-      │
-      ▼
-Forensic Image
+                         Storage Device
+                               │
+                               ▼
+                       Device Discovery
+                               │
+                               ▼
+                       Safety Inspection
+                               │
+                  ┌────────────┴────────────┐
+                  │                         │
+                  ▼                         ▼
+          Forensic Workflow          Sanitization
+                  │                         │
+                  ▼                         ▼
+          Evidence Acquisition      Capability Probe
+                  │                         │
+                  ▼                ┌────────┼────────┐
+              Disk Image           │        │        │
+                  │                ▼        ▼        ▼
+                  ▼              NVMe     ATA      SCSI
+             SHA-256              │        │        │
+                  │                └────────┼────────┘
+                  ▼                         │
+            File Recovery                   ▼
+                  │                   Verification
+                  └──────────┬──────────────┘
+                             │
+                             ▼
+                       Audit / Report
 ```
 
 ---
 
-## Data Recovery
+# Core Features
 
-The recovery subsystem analyzes disk images and attempts to identify recoverable files.
+## 🔍 Device Discovery
+
+ReSecureOS discovers block storage devices through Linux system
+interfaces and provides a unified representation of each device.
+
+Device information can include:
+
+* Device path
+* Vendor
+* Model
+* Serial number
+* Capacity
+* Logical sector size
+* Physical sector size
+* Rotational state
+* Bus type
+* Media type
+* Mount state
+
+Example:
+
+```text
+Device      : /dev/sdb
+Model       : VMware Virtual Disk
+Serial      : -
+Capacity    : 3.00 GiB
+Bus         : SATA
+Media       : HDD
+Status      : SAFE
+```
+
+---
+
+# 💽 Forensic Acquisition
+
+The acquisition subsystem provides controlled disk imaging for
+forensic workflows.
+
+```text
+Source Drive
+     │
+     ▼
+Device Inspection
+     │
+     ▼
+Write Protection
+     │
+     ▼
+Disk Imaging
+     │
+     ▼
+SHA-256 Hash
+     │
+     ▼
+Evidence Manifest
+     │
+     ▼
+Forensic Image
+```
+
+Acquisition metadata can include:
+
+* Source device
+* Device model
+* Serial number
+* Image destination
+* Image size
+* SHA-256 hash
+* Acquisition status
+* Timestamp
+* Write-protection state
+
+The intended workflow is to preserve the original evidence and perform
+subsequent analysis against the acquired image.
+
+---
+
+# 🧩 Data Recovery
+
+ReSecureOS provides a modular recovery pipeline for analyzing disk
+images and identifying potentially recoverable files.
 
 ```text
 Disk Image
@@ -111,7 +206,7 @@ File Validation
 Confidence Scoring
     │
     ▼
-Classification
+File Classification
     │
     ▼
 Recovered Files
@@ -119,108 +214,280 @@ Recovered Files
 
 Recovered candidates can contain:
 
-* File type
-* Start offset
-* End offset
-* Recovered size
-* Validation status
-* Confidence level
-* Category
-* Output path
-* SHA-256 hash
+| Field        | Description                             |
+| ------------ | --------------------------------------- |
+| File Type    | Detected file format                    |
+| Start Offset | Location where the candidate begins     |
+| End Offset   | Location where the candidate ends       |
+| Size         | Recovered size                          |
+| Validation   | Whether the candidate passes validation |
+| Confidence   | Recovery confidence level               |
+| Category     | Classification such as Images/Documents |
+| Output Path  | Recovery destination                    |
+| SHA-256      | Hash of the recovered file              |
+
+Example:
+
+```text
+Type        : JPEG
+Size        : 2.0 KB
+Status      : VALID
+Confidence  : MEDIUM
+Category    : Images
+```
+
+---
+
+# 🛡️ Secure Storage Sanitization
+
+ReSecureOS contains a capability-driven sanitization architecture
+designed to select an appropriate method based on the storage device.
+
+```text
+                         Target Drive
+                              │
+                              ▼
+                        Safety Checks
+                              │
+                              ▼
+                     Capability Detection
+                              │
+              ┌───────────────┼───────────────┐
+              │               │               │
+              ▼               ▼               ▼
+            NVMe             ATA             SCSI
+              │               │               │
+              ▼               ▼               ▼
+        NVMe Sanitizer   ATA Sanitizer   SCSI Sanitizer
+              │               │               │
+              └───────────────┼───────────────┘
+                              │
+                              ▼
+                         Verification
+                              │
+                              ▼
+                         Audit Result
+```
+
+Supported sanitizer architecture includes:
+
+* NVMe sanitization
+* ATA sanitization / secure erase mechanisms
+* SCSI sanitization
+* Generic block-level clearing
+
+The system should not assume that every device supports the same
+sanitization mechanism.
+
+---
+
+# Sanitization Assurance
+
+ReSecureOS distinguishes between different levels of sanitization
+assurance.
+
+### CLEAR
+
+A logical sanitization operation such as block-level overwriting.
+
+### PURGE
+
+A stronger device-level sanitization mechanism intended to provide
+greater protection against recovery.
+
+ReSecureOS does **not** claim PURGE simply because a command was issued.
+
+The reported result should be based on:
+
+* Device capabilities
+* Sanitization method
+* Command result
+* Verification evidence
+* Device-specific behavior
+
+This distinction is important when working with SSDs and other
+storage technologies where logical overwriting may not address every
+physical storage location.
+
+---
+
+# 🔎 Verification
+
+Verification is implemented as a separate subsystem.
+
+For logical CLEAR operations, the current implementation uses
+randomized read-back sampling.
+
+```text
+Sanitization
+     │
+     ▼
+Verification
+     │
+ ┌───┴───┐
+ │       │
+ ▼       ▼
+PASS    FAIL
+ │       │
+ ▼       ▼
+Done    Report
+```
+
+The verification layer supports direct I/O where available and can
+fall back to buffered reads where required by the environment.
+
+Verification results can include:
+
+* Verification status
+* Verification method
+* Number of samples checked
+* Errors encountered
+* Operation duration
+
+---
+
+# 🧾 Sanitization Results & Audit Information
+
+Every sanitization operation produces a structured result rather than
+simply returning a success/failure value.
+
+Example:
+
+```text
+Device          : /dev/sdb
+Bus             : SATA
+Media           : SATA HDD
+Vendor          : Example Vendor
+Model           : Example Drive
+Serial          : XXXXX
+Capacity        : 3221225472 bytes
+
+Method          : Generic Block Clear
+Assurance       : CLEAR
+
+Wipe            : PASS
+Verification    : PASS
+Samples Checked : 1000
+
+Status          : SUCCESS
+```
+
+This result model provides the foundation for future:
+
+* Sanitization certificates
+* Audit reports
+* Evidence logs
+* Compliance-oriented documentation
+
+---
+
+# 🖥️ User Interface
+
+ReSecureOS currently includes a lightweight Linux GUI built with
+Python/Tkinter.
+
+The interface is designed around the major workflows:
+
+```text
+┌─────────────────────────────────────────┐
+│              ReSecureOS                 │
+├─────────────────────────────────────────┤
+│                                         │
+│  Devices                                │
+│  Acquisition                            │
+│  Recovery                               │
+│  Sanitization                           │
+│  Verification                           │
+│  Reports                                │
+│                                         │
+└─────────────────────────────────────────┘
+```
+
+---
+
+# Screenshots
+
+## Device Management
+
+![ReSecureOS Device Management](assets/screenshots/devices.png)
+
+The device interface provides a centralized view of detected storage
+devices and their relevant metadata.
+
+---
+
+## Forensic Acquisition
+
+![ReSecureOS Forensic Acquisition](assets/screenshots/acquisition.png)
+
+The acquisition interface provides the workflow for selecting a source
+device, configuring an acquisition destination, and performing
+forensic imaging.
+
+---
+
+## Data Recovery
+
+![ReSecureOS Data Recovery](assets/screenshots/recovery.png)
+
+The recovery interface provides access to file carving, validation,
+confidence scoring, classification, and recovered-file output.
 
 ---
 
 ## Secure Sanitization
 
-ReSecureOS uses a **capability-driven sanitization model**.
+![ReSecureOS Sanitization](assets/screenshots/sanitization.png)
 
-The system does not blindly apply the same sanitization technique to every storage device.
-
-Instead, it first identifies the device and determines which supported sanitization mechanisms are available.
-
-```text
-                    Target Device
-                         │
-                         ▼
-                  Safety Checks
-                         │
-                         ▼
-                Capability Detection
-                         │
-             ┌───────────┼───────────┐
-             │           │           │
-             ▼           ▼           ▼
-           NVMe         ATA         SCSI
-             │           │           │
-             ▼           ▼           ▼
-        NVMe Method  ATA Method  SCSI Method
-             │           │           │
-             └───────────┼───────────┘
-                         │
-                         ▼
-                    Verification
-                         │
-                         ▼
-                    Audit Result
-```
-
-Supported architecture includes:
-
-* NVMe sanitization
-* ATA sanitization / secure erase mechanisms
-* SCSI sanitization
-* Generic block-level clearing where appropriate
+The sanitization interface provides device inspection, safety checks,
+method selection, sanitization execution, and result reporting.
 
 ---
 
 # Architecture
 
+ReSecureOS is divided into independent modules.
+
 ```text
-                         ┌──────────────────────────┐
-                         │        ReSecureOS         │
-                         │                          │
-                         │  Portable Linux Platform │
-                         └────────────┬─────────────┘
-                                      │
-              ┌───────────────────────┼───────────────────────┐
-              │                       │                       │
-              ▼                       ▼                       ▼
-       ┌─────────────┐        ┌──────────────┐        ┌─────────────┐
-       │   Device    │        │ Acquisition  │        │  Recovery   │
-       │   Layer     │        │    Layer     │        │    Layer    │
-       │             │        │              │        │             │
-       │ Discovery   │        │ Write Protect│        │ File Carving│
-       │ Metadata    │        │ Disk Imaging │        │ Validation  │
-       │ Bus Detect  │        │ SHA-256      │        │ Confidence  │
-       └──────┬──────┘        └──────┬───────┘        └──────┬──────┘
-              │                      │                       │
-              └──────────────────────┼───────────────────────┘
-                                     │
-                                     ▼
-                           ┌─────────────────────┐
-                           │    Sanitization     │
-                           │       Engine        │
-                           │                     │
-                           │ Capability Detection│
-                           │ Method Selection    │
-                           │ NVMe / ATA / SCSI   │
-                           │ Generic Fallback    │
-                           └──────────┬──────────┘
-                                      │
-                                      ▼
-                           ┌─────────────────────┐
-                           │    Verification     │
-                           │                     │
-                           │ Read-back Checks    │
-                           │ Result Generation   │
-                           └──────────┬──────────┘
-                                      │
-                                      ▼
-                           ┌─────────────────────┐
-                           │    UI / CLI /       │
-                           │    Audit Reports    │
-                           └─────────────────────┘
+                    ┌──────────────────────┐
+                    │      ReSecureOS      │
+                    └──────────┬───────────┘
+                               │
+       ┌───────────────────────┼───────────────────────┐
+       │                       │                       │
+       ▼                       ▼                       ▼
+┌─────────────┐        ┌─────────────┐        ┌─────────────┐
+│   Device    │        │ Acquisition │        │   Recovery  │
+│   Layer     │        │    Layer    │        │    Layer    │
+├─────────────┤        ├─────────────┤        ├─────────────┤
+│ Discovery   │        │ Imaging     │        │ Carving     │
+│ Metadata    │        │ Hashing     │        │ Validation  │
+│ Bus Detect  │        │ Write Prot. │        │ Confidence  │
+└──────┬──────┘        └──────┬──────┘        │ Classifier  │
+       │                      │               └──────┬──────┘
+       └──────────────────────┼──────────────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │   Sanitization      │
+                    │      Engine         │
+                    ├─────────────────────┤
+                    │ Capability Probe    │
+                    │ NVMe                │
+                    │ ATA                 │
+                    │ SCSI                │
+                    │ Generic Clear       │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Verification     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   UI / CLI / Audit  │
+                    └─────────────────────┘
 ```
 
 ---
@@ -243,6 +510,23 @@ ReSecureOS/
 │   ├── HashEngine.h
 │   ├── WriteProtection.cpp
 │   └── WriteProtection.h
+│
+├── apps/
+│   ├── acquisition-test/
+│   ├── device-test/
+│   ├── recovery-test/
+│   └── sanitizer/
+│
+├── assets/
+│   ├── banner/
+│   │   └── resecureos-banner.svg
+│   ├── logo/
+│   │   └── resecureos-logo.svg
+│   └── screenshots/
+│       ├── acquisition.png
+│       ├── devices.png
+│       ├── recovery.png
+│       └── sanitization.png
 │
 ├── device/
 │   ├── DriveInfo.h
@@ -278,19 +562,8 @@ ReSecureOS/
 │   ├── Verification.cpp
 │   └── Verification.h
 │
-├── apps/
-│   ├── acquisition-test/
-│   ├── device-test/
-│   ├── recovery-test/
-│   └── sanitizer/
-│
 ├── os/
 │   └── launcher/
-│
-├── assets/
-│   ├── screenshots/
-│   ├── logo/
-│   └── banner/
 │
 ├── CMakeLists.txt
 ├── README.md
@@ -302,45 +575,31 @@ ReSecureOS/
 
 # Technology Stack
 
-| Technology         | Purpose                           |
-| ------------------ | --------------------------------- |
-| **Linux**          | Operating system platform         |
-| **C++17**          | Core forensic and storage engine  |
-| **CMake**          | Build system                      |
-| **Python 3**       | Application/UI layer              |
-| **Tkinter**        | Lightweight GUI                   |
-| **pybind11**       | Python ↔ C++ integration          |
-| **OpenSSL**        | SHA-256 hashing                   |
-| **libblkid**       | Block-device information          |
-| **libudev**        | Device discovery                  |
-| **NVMe ioctl**     | NVMe device operations            |
-| **SCSI SG_IO**     | Storage command passthrough       |
-| **The Sleuth Kit** | Filesystem forensic functionality |
+| Technology           | Purpose                             |
+| -------------------- | ----------------------------------- |
+| **Linux**            | Operating system platform           |
+| **C++17**            | Core storage and forensic engine    |
+| **CMake**            | Build system                        |
+| **Python 3**         | GUI/application layer               |
+| **Tkinter**          | Lightweight Linux GUI               |
+| **pybind11**         | Python ↔ C++ bridge                 |
+| **OpenSSL**          | Cryptographic hashing               |
+| **Linux/POSIX APIs** | Raw block-device operations         |
+| **NVMe ioctl**       | NVMe device operations              |
+| **SCSI SG_IO**       | SCSI/ATA passthrough                |
+| **libblkid**         | Block-device/filesystem information |
+| **libudev**          | Device discovery                    |
+| **The Sleuth Kit**   | Filesystem/forensic functionality   |
 
 ---
 
 # Installation
 
-## Requirements
-
 ReSecureOS is currently developed for Linux.
 
-Recommended environment:
+## Debian / Ubuntu
 
-```text
-Linux
- ├── C++17 compiler
- ├── CMake
- ├── Python 3
- ├── Tkinter
- ├── pybind11
- ├── OpenSSL
- ├── libblkid
- ├── libudev
- └── The Sleuth Kit
-```
-
-### Debian / Ubuntu
+Install the required dependencies:
 
 ```bash
 sudo apt update
@@ -360,6 +619,16 @@ sudo apt install \
     libtsk-dev
 ```
 
+For the lightweight graphical environment:
+
+```bash
+sudo apt install \
+    xorg \
+    openbox \
+    xterm \
+    xinit
+```
+
 ---
 
 # Build
@@ -367,18 +636,18 @@ sudo apt install \
 Clone the repository:
 
 ```bash
-git clone https://github.com/sanyampat/ReSecureOS.git
-cd ReSecureOS
+git clone https://github.com/sanyampat/dataRecoveryAndSanatization.git
+cd dataRecoveryAndSanatization
 ```
 
-Create a build directory:
+Create the build directory:
 
 ```bash
 mkdir -p build
 cd build
 ```
 
-Configure:
+Configure the project:
 
 ```bash
 cmake ..
@@ -392,7 +661,7 @@ cmake --build . -j$(nproc)
 
 ---
 
-# Running the GUI
+# Run
 
 From the repository root:
 
@@ -402,28 +671,51 @@ PYTHONPATH="$PWD/UI" python3 UI/ui.py
 
 ---
 
-# Sanitization Safety
+# Python / C++ Integration
 
-**ReSecureOS performs destructive storage operations.**
+The GUI communicates with the C++ core using `pybind11`.
 
-Before sanitizing a device, always verify:
+Test the Python module:
 
-1. Device path
-2. Model
-3. Serial number
-4. Capacity
-5. Mount state
-6. System-disk status
-7. Sanitization capability
-8. Intended target device
+```bash
+PYTHONPATH="$PWD/UI" python3 -c \
+'import cpp_sanitizer; print("ReSecureOS C++ SANITIZER OK")'
+```
 
-Example:
+Expected output:
+
+```text
+ReSecureOS C++ SANITIZER OK
+```
+
+---
+
+# Safety
+
+ReSecureOS performs operations directly against storage devices.
+
+Some operations are **destructive and irreversible**.
+
+Before performing sanitization:
 
 ```bash
 lsblk -o NAME,SIZE,MODEL,SERIAL,TYPE,MOUNTPOINTS
 ```
 
-Never assume that:
+Verify:
+
+* Correct device
+* Correct model
+* Correct serial number
+* Correct capacity
+* Device is not the system disk
+* Partitions are not mounted
+* Device is intended for the operation
+* Correct sanitization method has been selected
+
+### Never assume a device path is safe.
+
+For example:
 
 ```text
 /dev/sda
@@ -431,142 +723,36 @@ Never assume that:
 /dev/nvme0n1
 ```
 
-refers to a particular physical device.
-
-Linux device names can change depending on hardware configuration and boot order.
-
----
-
-# Sanitization Philosophy
-
-ReSecureOS follows a **capability-driven sanitization model**.
-
-Different storage technologies behave differently, so the platform attempts to select an appropriate mechanism based on the capabilities of the target device.
-
-```text
-HDD
- └── Block-level overwrite where appropriate
-
-SATA SSD
- └── Prefer device-supported sanitization mechanisms
-
-NVMe SSD
- └── Prefer supported NVMe device-level mechanisms
-
-SCSI
- └── Use supported SCSI sanitization mechanisms
-
-USB / Virtual / Unknown
- └── Use an appropriate fallback
-     and clearly report the achievable assurance
-```
-
-ReSecureOS distinguishes between different assurance levels rather than assuming that every device can be sanitized identically.
-
-The software should not claim a stronger sanitization assurance than the available device capabilities and verification evidence support.
+are dynamically assigned by Linux and do not inherently identify a
+particular physical drive.
 
 ---
 
-# Verification
+# Testing
 
-Verification is treated as a separate subsystem.
+Storage operations should be tested using:
 
-For logical clearing operations, the current architecture supports randomized read-back sampling.
+* Disposable drives
+* Virtual disks
+* Test images
+* Authorized evidence media
 
-```text
-Sanitization
-     │
-     ▼
-Verification
-     │
- ┌───┴───┐
- ▼       ▼
-PASS    FAIL
- │       │
- ▼       ▼
-Done    Report
-```
-
-Verification results can be included in the sanitization result and audit information.
-
----
-
-# Forensic Acquisition
-
-ReSecureOS provides a controlled acquisition workflow designed to preserve evidence integrity.
+A recommended development environment is:
 
 ```text
-Source Device
-      │
-      ▼
-Device Inspection
-      │
-      ▼
-Write Protection
-      │
-      ▼
-Disk Imaging
-      │
-      ▼
-SHA-256 Hash
-      │
-      ▼
-Evidence Manifest
-      │
-      ▼
-Forensic Image
+              QEMU / VMware
+                    │
+                    ▼
+           Disposable Virtual Disk
+                    │
+                    ▼
+                ReSecureOS
+                    │
+                    ▼
+                 Testing
 ```
 
-Acquisition metadata can include:
-
-* Source device
-* Device model
-* Serial number
-* Image destination
-* Image size
-* SHA-256 hash
-* Acquisition status
-* Timestamp
-* Write-protection state
-
----
-
-# Data Recovery
-
-The recovery subsystem works primarily from disk images rather than modifying original evidence.
-
-```text
-Disk Image
-     │
-     ▼
-File Carving
-     │
-     ▼
-Validation
-     │
-     ▼
-Confidence Scoring
-     │
-     ▼
-Classification
-     │
-     ▼
-Recovered Files
-```
-
-Recovered files can be independently validated using standard Linux tools.
-
-Example:
-
-```bash
-file recovered-file
-```
-
-and:
-
-```bash
-sha256sum recovered-file
-```
+**Never use your operating-system disk for destructive testing.**
 
 ---
 
@@ -597,17 +783,18 @@ sha256sum recovered-file
 * [x] Post-operation verification architecture
 * [x] System/mounted-device safety guards
 
-## In Development
+## In Progress
 
 * [ ] Hardware-wide sanitization validation
 * [ ] Improved ATA passthrough compatibility
 * [ ] Improved SCSI capability detection
 * [ ] Device-specific verification strategies
 * [ ] Stronger system-disk/LVM detection
-* [ ] Automated regression testing
+* [ ] Comprehensive hardware compatibility testing
+* [ ] Automated regression tests
 * [ ] Sanitization certificates
 * [ ] Full forensic audit logging
-* [ ] Bootable Live ISO
+* [ ] Bootable Live environment
 * [ ] Hardware compatibility database
 * [ ] Production deployment image
 
@@ -615,7 +802,7 @@ sha256sum recovered-file
 
 # Roadmap
 
-### Phase 1 — Core Platform
+## Phase 1 — Core Platform
 
 * [x] Device discovery
 * [x] Device metadata
@@ -623,7 +810,7 @@ sha256sum recovered-file
 * [x] CMake build
 * [x] Linux integration
 
-### Phase 2 — Forensic Acquisition
+## Phase 2 — Forensic Acquisition
 
 * [x] Disk imaging
 * [x] SHA-256 hashing
@@ -631,7 +818,7 @@ sha256sum recovered-file
 * [x] Evidence manifest
 * [ ] Extended acquisition logging
 
-### Phase 3 — Recovery
+## Phase 3 — Recovery
 
 * [x] File carving
 * [x] File validation
@@ -642,20 +829,21 @@ sha256sum recovered-file
 * [ ] Advanced filesystem recovery
 * [ ] Recovery reporting
 
-### Phase 4 — Sanitization
+## Phase 4 — Sanitization
 
 * [x] Sanitization engine
 * [x] Capability detection
 * [x] Device-specific sanitizer architecture
-* [x] Generic fallback
+* [x] Generic block fallback
 * [x] Result/audit structure
-* [ ] ATA hardening
+* [ ] ATA command hardening
 * [ ] NVMe hardware validation
-* [ ] SCSI validation
+* [ ] SCSI command validation
 * [ ] Media-aware verification
 * [ ] Sanitization certificates
+* [ ] Hardware compatibility testing
 
-### Phase 5 — ReSecureOS
+## Phase 5 — ReSecureOS Live Environment
 
 * [x] Linux development environment
 * [x] GUI
@@ -671,24 +859,34 @@ sha256sum recovered-file
 
 # Open Source
 
-ReSecureOS is intended to be developed as an open-source project.
+ReSecureOS is being developed as an open-source project.
 
-Contributions are welcome from developers, cybersecurity researchers, digital forensics practitioners, Linux developers, storage engineers, and students.
+The project welcomes contributions from:
 
-Areas where contributions are especially useful include:
+* Linux developers
+* C++ developers
+* Digital forensics researchers
+* Cybersecurity professionals
+* Storage engineers
+* Security researchers
+* Students
+* Open-source contributors
 
-* Storage hardware compatibility
+Potential contribution areas include:
+
+* Storage hardware support
 * Filesystem support
 * Forensic acquisition
 * Recovery algorithms
-* NVMe/ATA/SCSI support
-* Verification mechanisms
+* File signatures
+* NVMe support
+* ATA support
+* SCSI support
+* Verification
 * GUI development
 * Testing
 * Documentation
 * Live ISO development
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.
 
 ---
 
@@ -700,7 +898,7 @@ Create a feature branch:
 git checkout -b feature/your-feature
 ```
 
-Make your changes and test them using disposable devices or virtual disks where applicable.
+Make your changes and test them.
 
 Commit:
 
@@ -717,115 +915,112 @@ git push origin feature/your-feature
 
 Then open a Pull Request.
 
-### Contribution principles
+### Contribution guidelines
 
 * Keep modules separated by responsibility.
 * Prefer modern C++ practices.
 * Avoid destructive operations in automated tests.
-* Test storage operations using disposable devices.
+* Use disposable devices for storage testing.
 * Document hardware-specific behavior.
 * Clearly identify experimental functionality.
-* Never claim sanitization assurance without appropriate evidence.
-* Add regression tests for new functionality.
-
----
-
-# Testing
-
-Storage operations should be tested against:
-
-* Disposable drives
-* Virtual disks
-* Test images
-* Authorized evidence media
-
-A safe development environment can use:
-
-```text
-QEMU / VMware
-      │
-      ▼
-Disposable Virtual Disk
-      │
-      ▼
-ReSecureOS
-      │
-      ▼
-Testing
-```
-
-**Never use your operating-system disk for destructive testing.**
+* Do not claim sanitization assurance without supporting evidence.
+* Add regression tests where appropriate.
 
 ---
 
 # Security
 
-If you discover a security vulnerability in ReSecureOS, please avoid publicly posting sensitive exploit details before the issue can be investigated.
+If you discover a security vulnerability in ReSecureOS, please avoid
+publicly disclosing sensitive vulnerability details until the issue
+has been investigated.
 
-A dedicated security policy and responsible disclosure process will be added as the project matures.
+A dedicated security policy and responsible disclosure process will be
+provided as the project matures.
 
 ---
 
 # License
 
-ReSecureOS is open source.
-
 See [`LICENSE`](LICENSE) for the applicable license.
+
+*(Choose and add a `LICENSE` file — e.g. MIT, Apache-2.0, or GPL-3.0 —
+before advertising the project as open source.)*
 
 ---
 
-# Project Status
+# Disclaimer
 
-🚧 **ReSecureOS is currently under active development.**
+ReSecureOS is intended for:
 
-Some features, particularly hardware-specific sanitization and the bootable operating-system environment, are experimental and require additional hardware validation.
+* Authorized digital forensics
+* Data recovery
+* Storage research
+* Authorized storage sanitization
+* Cybersecurity research
+* Educational purposes
 
-Do not treat experimental functionality as a production-grade sanitization guarantee.
+Sanitization operations can permanently destroy data.
+
+**Only operate on storage devices that you own or have explicit
+authorization to process.**
+
+The developers are not responsible for:
+
+* Data loss
+* Hardware damage
+* Incorrect device selection
+* Misuse of the software
+* Unauthorized data processing
 
 ---
 
 # Vision
 
-The long-term goal of ReSecureOS is to become a **portable, offline forensic and storage-security operating system** that can boot directly from removable media and provide investigators and security professionals with a complete storage workflow.
+The long-term goal of ReSecureOS is to become a **portable,
+offline storage-forensics and security operating system**.
+
+The planned environment will boot independently from a host operating
+system and provide an integrated workflow for:
 
 ```text
-                ReSecureOS
-                    │
-        ┌───────────┼───────────┐
-        │           │           │
-        ▼           ▼           ▼
-     Acquire     Recover     Resecure
-        │           │           │
-        └───────────┼───────────┘
-                    │
-                    ▼
-                Verify
-                    │
-                    ▼
-                 Report
+             ┌─────────────────────┐
+             │     ReSecureOS       │
+             └──────────┬──────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+        ▼               ▼               ▼
+     Acquire         Recover        Resecure
+        │               │               │
+        └───────────────┼───────────────┘
+                        │
+                        ▼
+                    Verify
+                        │
+                        ▼
+                     Report
 ```
 
----
-
-## ⭐ Support the Project
-
-If ReSecureOS is useful to you:
-
-* ⭐ Star the repository
-* 🐛 Report bugs
-* 💡 Suggest features
-* 🔧 Submit pull requests
-* 📖 Improve documentation
-* 🧪 Test on additional storage hardware
-
-Every contribution helps make ReSecureOS better.
+The ultimate objective is a portable Linux environment that combines
+forensic acquisition, data recovery, storage sanitization,
+verification, and audit capabilities in one platform.
 
 ---
 
-## ReSecureOS
+<p align="center">
+  <img src="assets/logo/resecureos-logo.svg" alt="ReSecureOS logo" width="60">
+</p>
 
-**Recover. Acquire. Verify. Resecure.**
+<h3 align="center">Recover. Acquire. Verify. Resecure.</h3>
 
-Built for:
+<p align="center">
+  <strong>Digital Forensics · Data Recovery · Evidence Acquisition · Storage Security · Linux</strong>
+</p>
 
-**Digital Forensics · Data Recovery · Evidence Acquisition · Storage Security · Linux**
+<p align="center">
+  ⭐ Star the repository if you find the project useful &nbsp;·&nbsp;
+  🐛 Report issues &nbsp;·&nbsp;
+  💡 Propose improvements &nbsp;·&nbsp;
+  🔧 Contribute code &nbsp;·&nbsp;
+  📖 Improve the documentation
+</p>
